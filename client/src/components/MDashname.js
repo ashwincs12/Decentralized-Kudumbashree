@@ -2,7 +2,7 @@ import React from 'react'
 import '../stylesheets/dashboardstyle.css';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
-export default function Dashname()
+export default function MDashname()
 {
   return(
     <>
@@ -19,7 +19,7 @@ export default function Dashname()
             <h5 className="fs-6 mb-0">
               <a className="text-decoration-none" href="#">NAME</a>
             </h5>
-            <p className="mt-1 mb-0">CDS Admin</p>
+            <p className="mt-1 mb-0">Member</p>
           </div>
         </div>
 
@@ -28,18 +28,21 @@ export default function Dashname()
           <i className="fa fa-search position-absolute d-block fs-6"></i>
         </div>
 
-        <ul className="categories list-unstyled">
-          <li className="">
-            <i className="uil-estate fa-fw"></i><Link to="/cdsdash/">Dashboards</Link>
-          </li>
-          <li className="">
-            <i className="uil-question-circle"></i> <Link to="/cdsdash/reviewshg">Review SHG Requests</Link>
-          </li>
-          <li className="">
-            <i className="uil-bell"></i><Link to="/cdsdash/publishnoti">Publish Notifications</Link>
-          </li>
-        </ul>
-      </aside>
+        <ul class="categories list-unstyled">
+        <li class="">
+          <i class="uil-estate fa-fw"></i><Link to="/psdash/">Dashboards</Link>
+        </li>
+        <li class="">
+          <i class="uil-money-bill"></i><Link to="/psdash/weeklypay/">Weekly Payments</Link>
+        </li>
+        <li class="">
+          <i class="uil-money-bill"></i><Link to="/psdash/loanpay/">Loan Repayments</Link>
+        </li>
+        <li class="">
+          <i class="uil-money-bill-stack"></i><Link to="/psdash/reqloan/">Request for Loan</Link>
+        </li>
+      </ul>
+    </aside>
 
       <section id="wrapper">
         <nav className="navbar navbar-expand-md">

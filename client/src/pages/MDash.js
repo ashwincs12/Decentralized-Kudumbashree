@@ -1,12 +1,12 @@
 import React from 'react'
-import Dashname from '../components/Dashname'
+import MDashname from '../components/MDashname'
 import Notification from '../components/Notification'
 
-export default function CRSDash()
+export default function MDash()
 {
   return(
     <>
-      <Dashname/>
+      <MDashname/>
 
       {/* Greetings */}
       <div className="p-4 ml-60">

@@ -450,3 +450,33 @@ body {
 ::-webkit-scrollbar-thumb:hover {
 	background-color: rgba(0, 0, 0, 0.3);
 }
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.location-text p {
+  margin: 0;
+  /* Add your preferred styling for location text here */
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.accept {
+  background-color: green;
+}
+
+.reject {
+  background-color: red;
+}
+
+/* Add media query if necessary to ensure proper responsiveness */
