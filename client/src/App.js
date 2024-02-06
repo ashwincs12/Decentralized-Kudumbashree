@@ -12,7 +12,7 @@ import Demote from './pages/Demote';
 import MinuitsPrep from './pages/MinuitsPrep';
 import MDash from './pages/MDash';
 import Login from './pages/Login';
-import { Landing } from './pages/Landing';
+import  Landing  from './pages/Landing';
 
 export default function App() {
   const [backendData, setBackendData] = useState([{}]);

@@ -1,0 +1,155 @@
+.macbook-pro {
+  background-color: #e0e0e0;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.macbook-pro .div {
+  background-color: #e0e0e0;
+  height: 1117px;
+  position: relative;
+  width: 1728px;
+}
+
+.macbook-pro .overlap {
+  height: 873px;
+  left: 50px;
+  position: absolute;
+  top: 220px;
+  width: 1678px;
+}
+
+.macbook-pro .overlap-group {
+  height: 873px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 1678px;
+}
+
+.macbook-pro .election-women {
+  height: 873px;
+  left: 600px;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  width: 1315px;
+
+}
+
+.macbook-pro .text-wrapper {
+  color: #191919;
+  font-family: "Work Sans-SemiBold", Helvetica;
+  font-size: 100px;
+  font-weight: 600;
+  left: 0;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 57px;
+  width: 1141px;
+}
+
+.macbook-pro .group {
+  height: 87px;
+  left: 0;
+  position: absolute;
+  top: 315px;
+  width: 312px;
+}
+
+.macbook-pro .overlap-group-2 {
+  border-radius: 54px;
+  height: 87px;
+  position: relative;
+  width: 310px;
+}
+
+.macbook-pro .rectangle {
+  background-color: #a22d8d;
+  border-radius: 54px;
+  height: 87px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 310px;
+}
+
+.macbook-pro .text-wrapper-2 {
+  color: #ffffff;
+  font-family: "Poppins-Medium", Helvetica;
+  font-size: 31px;
+  font-weight: 500;
+  left: 65px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 20px;
+}
+
+.macbook-pro .group-2 {
+  height: 153px;
+  left: 22px;
+  position: absolute;
+  top: 8px;
+  width: 1661px;
+}
+
+.macbook-pro .image {
+  height: 153px;
+  left: 0;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  width: 175px;
+}
+
+.macbook-pro .text-wrapper-3 {
+  color: #000000;
+  font-family: "Poppins-Medium", Helvetica;
+  font-size: 31px;
+  font-weight: 500;
+  left: 1066px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 42px;
+}
+
+.macbook-pro .text-wrapper-4 {
+  color: #000000;
+  font-family: "Poppins-Medium", Helvetica;
+  font-size: 31px;
+  font-weight: 500;
+  left: 1526px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 42px;
+}
+
+.macbook-pro .text-wrapper-5 {
+  color: #000000;
+  font-family: "Poppins-Medium", Helvetica;
+  font-size: 31px;
+  font-weight: 500;
+  left: 1376px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 42px;
+}
+
+.macbook-pro .text-wrapper-6 {
+  color: #000000;
+  font-family: "Poppins-Medium", Helvetica;
+  font-size: 31px;
+  font-weight: 500;
+  left: 1202px;
+  letter-spacing: 0;
+  line-height: normal;
+  position: absolute;
+  top: 42px;
+}
