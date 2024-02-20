@@ -14,17 +14,14 @@ import MDash from './pages/MDash';
 import Login from './pages/Login';
 import  Landing  from './pages/Landing';
 
+//Web3 imports
+import abi from "./contracts/DK.json";
+import {ethers} from 'ethers'
+
+
+
 export default function App() {
-  const [backendData, setBackendData] = useState([{}]);
-
-  useEffect(() => {
-    fetch("/api")
-      .then(response => response.json())
-      .then(data => {
-        setBackendData(data);
-      });
-  }, []); 
-
+  
   return (
     <div>
       <Router>
@@ -36,7 +33,7 @@ export default function App() {
             <Login/>
           </Route>
           <Route path="/cdsdash" exact>
-            <CRSDash />
+            <CRSDash/>
           </Route>
           <Route path="/cdsdash/reviewshg">
             <ReviewSHG />

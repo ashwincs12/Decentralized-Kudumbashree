@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 const Login = () => {
+  
+
   return (
     <div className="grid place-content-center h-screen bg-opacity-5 font-nunito">
        
@@ -19,6 +21,9 @@ const Login = () => {
         <Link to="/mdash/">
         <button className="onboard bg-purple-600 text-white inline-block text-lg px-4 py-2 rounded-md"> Login as Member</button>
         </Link>
+
+        <div className='mt-5 text-end'>New User?<br></br>Join the revolution...</div>
+
       </div>
     </div>
   );

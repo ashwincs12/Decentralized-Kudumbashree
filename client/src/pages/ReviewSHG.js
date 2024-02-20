@@ -11,7 +11,7 @@ export default function ReviewSHG()
         <div className="welcome">
           <div className="content rounded-3 p-3 d-flex justify-content-between align-items-center">
             <div>
-              <h1 className="fs-3">Palakkad Ammayis</h1>
+              <h1 className="fs-3">Palakkad SHG</h1>
               <p className="mb-0">Request Submitted by: Niyathi</p>
             </div>
             <div className="location-text">

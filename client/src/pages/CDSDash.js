@@ -1,12 +1,76 @@
-import React from 'react'
+import React, { useEffect,useState } from 'react';
 import Dashname from '../components/Dashname'
 import Notification from '../components/Notification'
+//Web3 imports
+import abi from "../contracts/DK.json";
+import {ethers} from 'ethers'
+
 
 export default function CRSDash()
 {
+  const [state,setState]=useState({
+    provider:null,
+    signer:null,
+    contract:null
+  })
+  const [account,setAccount] = useState("Not connected")
+
+  const [approvedSHGs,setApprovedSHGs]=useState(0);
+  const [members,setMembers]=useState(0);
+  const [pendingSHGs,setPendingSHGs]=useState(0);
+  
+  useEffect(()=>
+  {
+    const template=async()=>
+    {
+      const contractAddress="0xC6518AD129b8fb7Bf5CCe3eF935081D3CBf8E5c1"
+      const contractABI=abi.abi
+
+      try{
+        //For metamask popup
+        const {ethereum}= window;
+        const account = await ethereum.request({
+          method:"eth_requestAccounts"
+        })
+
+        //Reload page when account is changed
+        window.ethereum.on("accountsChanged",()=>
+        {
+          window.location.reload() 
+        })
+
+        //Setting current account address
+        setAccount(account)
+
+             const provider = new ethers.providers.Web3Provider(ethereum) //read from blockchain
+        const signer = provider.getSigner(); //write into blockchain
+
+        //Creating instance of contract
+        const contract = new ethers.Contract(contractAddress,contractABI,signer)
+
+        //Updating state
+        setState({provider,signer,contract})
+        
+        //cdsdashfunction
+        const cdsdash = await contract.cdsdash();
+        // Update state variables with returned values
+        setApprovedSHGs(cdsdash[0].toNumber());
+        setMembers(cdsdash[1].toNumber());
+        setPendingSHGs(cdsdash[2].toNumber());
+
+
+
+      }catch(err)
+      {
+        console.log(err)
+      }
+    }
+    template()
+  },[])
+
   return(
     <>
-      <Dashname/>
+      <Dashname account={account}/>
 
       {/* Greetings */}
       <div className="p-4 ml-60">
@@ -25,7 +89,7 @@ export default function CRSDash()
             <i className="uil-building fs-2 text-center bg-primary rounded-circle"></i>
             <div className="ms-3">
               <div className="d-flex align-items-center">
-                <h3 className="mb-0">25</h3> <span className="d-block ms-2">SHGs</span>
+                <h3 className="mb-0">{approvedSHGs}</h3> <span className="d-block ms-2">SHGs</span>
               </div>
               <p className="fs-normal mb-0">Registered</p>
             </div>
@@ -36,7 +100,7 @@ export default function CRSDash()
             <i className="uil-users-alt fs-2 text-center bg-success rounded-circle"></i>
             <div className="ms-3">
               <div className="d-flex align-items-center">
-                <h3 className="mb-0">300</h3> <span className="d-block ms-2">Members</span>
+                <h3 className="mb-0">{members}</h3> <span className="d-block ms-2">Members</span>
               </div>
               <p className="fs-normal mb-0">Registered</p>
             </div>
@@ -47,7 +111,7 @@ export default function CRSDash()
             <i className="uil-question-circle fs-2 text-center bg-danger rounded-circle"></i>
             <div className="ms-3">
               <div className="d-flex align-items-center">
-                <h3 className="mb-0">5</h3> <span className="d-block ms-2">Pending</span>
+                <h3 className="mb-0">{pendingSHGs}</h3> <span className="d-block ms-2">Pending</span>
               </div>
               <p className="fs-normal mb-0">SHG Approvals</p>
             </div>
