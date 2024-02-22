@@ -10,11 +10,11 @@ const Register = () => {
       <div className="onboard-container shadow-xl rounded-lg p-16 bg-white min-w-[500px] text-center">
         <h1 className="text-2xl mb-6">Register to D - Kudumbashree</h1>
         <p className="text-lg mb-8 desc"></p>
-        <Link to="/">
+        <Link to="/memreg">
         <button className="onboard bg-purple-600 text-white inline-block text-lg px-4 py-2 rounded-md"> Join an existing SHG</button>
         </Link>
         <p className="text-lg mb-8 desc"></p>
-        <Link to="/">
+        <Link to="/regshg">
         <button className="onboard bg-purple-600 text-white inline-block text-lg px-4 py-2 rounded-md"> Create a new SHG</button>
         </Link>
 

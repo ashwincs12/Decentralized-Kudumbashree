@@ -1,12 +1,75 @@
-import React from 'react'
+import React,{useState,useEffect} from 'react'
 import PSDashname from '../components/PSDashname'
 import Notification from '../components/Notification'
+import abi from "../contracts/DK.json";
+import {ethers} from 'ethers'
 
 export default function PSDash()
 {
+  const [state,setState]=useState({
+    provider:null,
+    signer:null,
+    contract:null
+  })
+  const [account,setAccount] = useState("Not connected")
+
+  const [approvedSHGs,setApprovedSHGs]=useState(0);
+  const [members,setMembers]=useState(0);
+  const [pendingSHGs,setPendingSHGs]=useState(0);
+
+  
+  useEffect(()=>
+  {
+    const template=async()=>
+    {
+      const contractAddress=abi.address
+      const contractABI=abi.abi
+
+      try{
+        //For metamask popup
+        const {ethereum}= window;
+        const account = await ethereum.request({
+          method:"eth_requestAccounts"
+        })
+
+        //Reload page when account is changed
+        window.ethereum.on("accountsChanged",()=>
+        {
+          window.location.reload() 
+        })
+
+        //Setting current account address
+        setAccount(account)
+
+             const provider = new ethers.providers.Web3Provider(ethereum) //read from blockchain
+        const signer = provider.getSigner(); //write into blockchain
+
+        //Creating instance of contract
+        const contract = new ethers.Contract(contractAddress,contractABI,signer)
+
+        //Updating state
+        setState({provider,signer,contract})
+        
+        //cdsdashfunction
+        const cdsdash = await contract.cdsdash();
+        // Update state variables with returned values
+        setApprovedSHGs(cdsdash[0].toNumber());
+        setMembers(cdsdash[1].toNumber());
+        setPendingSHGs(cdsdash[2].toNumber());
+
+        console.log(approvedSHGs,members,pendingSHGs)
+
+      }catch(err)
+      {
+        console.log(err)
+      }
+    }
+    template()
+  },[approvedSHGs,members,pendingSHGs])
+
   return(
     <>
-      <PSDashname/>
+      <PSDashname account={account} />
 
       {/* Greetings */}
       <div className="p-4 ml-60">

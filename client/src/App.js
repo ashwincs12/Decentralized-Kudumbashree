@@ -13,6 +13,9 @@ import MinuitsPrep from './pages/MinuitsPrep';
 import MDash from './pages/MDash';
 import Login from './pages/Login';
 import  Landing  from './pages/Landing';
+import Register from './pages/Register';
+import SHGReg from './pages/SHGReg';
+import MemberReg from './pages/MemberReg';
 
 //Web3 imports
 import abi from "./contracts/DK.json";
@@ -31,6 +34,15 @@ export default function App() {
           </Route>
           <Route exact path="/login">
             <Login/>
+          </Route>
+          <Route exact path="/register">
+            <Register/>
+          </Route>
+          <Route exact path="/regshg">
+            <SHGReg/>
+          </Route>
+          <Route exact path="/memreg">
+            <MemberReg/>
           </Route>
           <Route path="/cdsdash" exact>
             <CRSDash/>

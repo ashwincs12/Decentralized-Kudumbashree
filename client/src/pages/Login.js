@@ -22,7 +22,9 @@ const Login = () => {
         <button className="onboard bg-purple-600 text-white inline-block text-lg px-4 py-2 rounded-md"> Login as Member</button>
         </Link>
 
-        <div className='mt-5 text-end'>New User?<br></br>Join the revolution...</div>
+        <Link to="/register/">
+        <div className='mt-5 text-end '>New User?<br></br>Join the revolution...</div>
+        </Link>
 
       </div>
     </div>

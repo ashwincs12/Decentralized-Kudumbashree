@@ -37,6 +37,15 @@ contract DK
         pendingSHGs.push(SHG(_name,_applicant,_location,msg.sender));
     }
 
+    function getPendingSHGs() public view returns (SHG[] memory) {
+        return pendingSHGs;
+    }
+
+    function getApprovedSHGs() public view returns (SHG[] memory) {
+        return approvedSHGs;
+    }
+
+
     function approveSHG(uint index) public 
     {
         require(index < pendingSHGs.length, "Invalid index");
@@ -61,9 +70,13 @@ contract DK
        n.push(Notification(_title,_desc,_link));
     }
 
+    function getNotifications() public view returns (Notification[] memory) {
+        return n;
+    }
+
     function cdsdash() view public returns(uint,uint,uint)
     {
-        require(msg.sender==cdsadmin);
+        require(msg.sender==cdsadmin,"Invalid authorization, Only CDS Admin can access this dashboard!!!");
         return(approvedSHGs.length,members.length,pendingSHGs.length);
     }
 
@@ -118,3 +131,4 @@ contract DK
     // }
 
 }
+

@@ -1,31 +1,55 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import abi from "../contracts/DK.json";
+import { ethers } from 'ethers';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Notification() {
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const contractAddress = abi.address;
+        const contractABI = abi.abi;
+        const { ethereum } = window;
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        const contract = new ethers.Contract(contractAddress, contractABI, signer);
+        const notifications = await contract.getNotifications();
+        setNotifications(notifications);
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div> 
-    <section className="charts ml-40">
-    <div className="chart-container p-3 charts m-">
-      <h3 className="fs-3">NOTIFICATIONS</h3>
-      <div style={{ height: '300px' }}>
-        <div className="notifications-container">
-          <div className="notification-tile">
-            <div className="notification-icon">
-              <i className="uil-megaphone" style={{ fontSize: '60px', padding: '10px' }}></i>
-            </div>
-            <div className="notification-content">
-              <div className="notification-date">Monday, January 30, 2024</div>
-              <div className="notification-status new">New</div>
-              <div className="notification-text">Applications are invited for internship ...</div>
-              <a href="#" className="notification-read-more">Read More</a>
+      <section className="charts ml-40">
+        <div className="chart-container p-3 charts m-">
+          <h3 className="fs-3">NOTIFICATIONS</h3>
+          <div style={{ height: '300px', overflowY: 'auto' }}>
+            <div className="notifications-container">
+              {notifications.map((notification, index) => (
+                <div className="notification-tile" key={index}>
+                  <div className="notification-icon">
+                    <i className="uil-megaphone" style={{ fontSize: '60px', padding: '10px' }}></i>
+                  </div>
+                  <div className="notification-content">
+                    <div className="notification-date">{notification.title}</div>
+                    <div className="notification-text">{notification.desc}</div>
+                    <a href={notification.link} className="notification-read-more">Read more...</a>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
-          {/* Repeat the above block for each notification */}
         </div>
-      </div>
+      </section>
     </div>
-  </section>
-  </div>
-  )
+  );
 }
 
-export default Notification
+export default Notification;

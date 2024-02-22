@@ -18,12 +18,12 @@ export default function CRSDash()
   const [approvedSHGs,setApprovedSHGs]=useState(0);
   const [members,setMembers]=useState(0);
   const [pendingSHGs,setPendingSHGs]=useState(0);
-  
+
   useEffect(()=>
   {
     const template=async()=>
     {
-      const contractAddress="0xC6518AD129b8fb7Bf5CCe3eF935081D3CBf8E5c1"
+      const contractAddress=abi.address
       const contractABI=abi.abi
 
       try{
@@ -58,7 +58,7 @@ export default function CRSDash()
         setMembers(cdsdash[1].toNumber());
         setPendingSHGs(cdsdash[2].toNumber());
 
-
+        console.log(approvedSHGs,members,pendingSHGs)
 
       }catch(err)
       {
@@ -66,7 +66,7 @@ export default function CRSDash()
       }
     }
     template()
-  },[])
+  },[approvedSHGs,members,pendingSHGs])
 
   return(
     <>

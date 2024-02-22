@@ -24,7 +24,7 @@ export default function Dashname({account})
             </h5>
             <p className="mt-1 mb-0">CDS Admin</p>
           </div>
-        </div>
+        </div> 
 
         <div className="search position-relative text-center px-4 py-3 mt-2">
           <input type="text" className="form-control w-100 border-0 bg-transparent" placeholder="Search here" />
@@ -55,7 +55,7 @@ export default function Dashname({account})
             </div>
             <p class="message"></p>
 
-          <button class="connect metamask-btn bg-blue-700 text-white px-8 py-4 text-2xl rounded-md">{add1}...{add2}</button>
+          <button class="connect metamask-btn bg-blue-700 text-white px-8 py-4 text-2xl rounded-md">🦊 {add1}...{add2}</button>
 
           </div>
         </nav>
