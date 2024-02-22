@@ -23,8 +23,10 @@ contract DK
     SHG[] public pendingSHGs;
     Member[] public members;
 
-    mapping(address=>SHG) public memberToSHG;
-    mapping(uint=>Member[]) public SHGToMember;
+   // Mapping from member address to SHG index
+    mapping(address => uint) public memberToSHGIndex;
+    // Mapping from SHG index to an array of its members
+    mapping(uint => Member[]) public SHGToMember;
 
     address cdsadmin;
 
@@ -80,13 +82,13 @@ contract DK
         return(approvedSHGs.length,members.length,pendingSHGs.length);
     }
 
-    function memRegandJoin(string memory _name,uint _aadhar,uint SHGindex) public 
-    {
+    function memRegandJoin(string memory _name, uint _aadhar, uint SHGindex) public {
         for (uint i = 0; i < members.length; i++) {
             require(members[i].memaddress != msg.sender, "Member already registered");
         }
 
-        memberToSHG[msg.sender] = approvedSHGs[SHGindex];
+        require(SHGindex < approvedSHGs.length, "Invalid SHG index");
+        memberToSHGIndex[msg.sender] = SHGindex;
         string memory _desig;
         if (msg.sender == approvedSHGs[SHGindex].applicant_address) {
             _desig = "President";
@@ -94,11 +96,36 @@ contract DK
             _desig = "Member";
         }
 
-        Member memory _m = Member(msg.sender, _name, _aadhar, _desig, 0, 0);
-        members.push(_m);
-
-        SHGToMember[SHGindex].push(_m);
+        Member memory newMember = Member(msg.sender, _name, _aadhar, _desig, 0, 0);
+        members.push(newMember);
+        SHGToMember[SHGindex].push(newMember);
     }
+
+
+     function memdash() public view returns (uint,uint,uint) {
+        uint callerBalance = 0;
+        uint callerLoan = 0;
+        uint SHGTotalBalance = 0;
+        bool isMember = false;
+        uint memberSHGIndex = 0;
+
+        for (uint i = 0; i < members.length; i++) {
+            if (members[i].memaddress == msg.sender) {
+                isMember = true;
+                callerBalance = members[i].balance;
+                callerLoan = members[i].loan;
+                memberSHGIndex = memberToSHGIndex[msg.sender];
+                break;
+            }
+        }
+        require(isMember, "Caller is not a registered member");
+        Member[] memory SHGMembers = SHGToMember[memberSHGIndex];
+        for (uint j = 0; j < SHGMembers.length; j++) {
+            SHGTotalBalance += SHGMembers[j].balance;
+        }
+        return (callerBalance, callerLoan, SHGTotalBalance);
+    }
+    
 
     function weeklyPay() payable public {
         require(msg.value > 0, "No value sent");

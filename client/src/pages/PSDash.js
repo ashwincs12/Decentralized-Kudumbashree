@@ -13,9 +13,9 @@ export default function PSDash()
   })
   const [account,setAccount] = useState("Not connected")
 
-  const [approvedSHGs,setApprovedSHGs]=useState(0);
-  const [members,setMembers]=useState(0);
-  const [pendingSHGs,setPendingSHGs]=useState(0);
+  const [balance,setBalance]=useState(0);
+  const [loan,setLoan]=useState(0);
+  const [shgworth,setSHGWorth]=useState(0);
 
   
   useEffect(()=>
@@ -51,13 +51,13 @@ export default function PSDash()
         setState({provider,signer,contract})
         
         //cdsdashfunction
-        const cdsdash = await contract.cdsdash();
+        const memdash = await contract.memdash();
         // Update state variables with returned values
-        setApprovedSHGs(cdsdash[0].toNumber());
-        setMembers(cdsdash[1].toNumber());
-        setPendingSHGs(cdsdash[2].toNumber());
+        setBalance(memdash[0].toNumber());
+        setLoan(memdash[1].toNumber());
+        setSHGWorth(memdash[2].toNumber());
 
-        console.log(approvedSHGs,members,pendingSHGs)
+        console.log(balance,loan,shgworth)
 
       }catch(err)
       {
@@ -65,7 +65,7 @@ export default function PSDash()
       }
     }
     template()
-  },[approvedSHGs,members,pendingSHGs])
+  },[balance,loan,shgworth])
 
   return(
     <>
@@ -88,7 +88,7 @@ export default function PSDash()
               <i class="uil-rupee-sign fs-2 text-center bg-success rounded-circle"></i>
               <div class="ms-3">
                 <div class="d-flex align-items-center">
-                  <h3 class="mb-0">6000</h3> <span class="d-block ms-2">INR</span>
+                  <h3 class="mb-0">{balance}</h3> <span class="d-block ms-2">INR</span>
                 </div>
                 <p class="fs-normal mb-0">Account Balance</p>
               </div>
@@ -99,7 +99,7 @@ export default function PSDash()
               <i class="uil-invoice fs-2 text-center bg-danger rounded-circle"></i>
               <div class="ms-3">
                 <div class="d-flex align-items-center">
-                  <h3 class="mb-0">2575</h3> <span class="d-block ms-2">INR</span>
+                  <h3 class="mb-0">{loan}</h3> <span class="d-block ms-2">INR</span>
                 </div>
                 <p class="fs-normal mb-0">Loan Due Remaining</p>
               </div>
@@ -110,7 +110,7 @@ export default function PSDash()
               <i class="uil-money-bill-stack fs-2 text-center bg-primary rounded-circle"></i>
               <div class="ms-3">
                 <div class="d-flex align-items-center">
-                  <h3 class="mb-0">32500</h3> <span class="d-block ms-2">INR</span>
+                  <h3 class="mb-0">{shgworth}</h3> <span class="d-block ms-2">INR</span>
                 </div>
                 <p class="fs-normal mb-0">SHG Net Worth</p>
               </div>
