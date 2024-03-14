@@ -3,8 +3,8 @@ import PSDashname from '../components/PSDashname';
 
 export default function ReqLoan() {
   const [enteredAmount, setEnteredAmount] = useState('');
-  const [currentSHGWorth, setCurrentSHGWorth] = useState(32500);
-  const [maximumEligibleAmount, setMaximumEligibleAmount] = useState(30 * currentSHGWorth / 100);
+  const [currentSHGWorth, setCurrentSHGWorth] = useState(0);
+  const [maximumEligibleAmount, setMaximumEligibleAmount] = useState(0);
   const [amountExceedsWarning, setAmountExceedsWarning] = useState(false);
 
   const handleAmountChange = (e) => {
@@ -24,7 +24,7 @@ export default function ReqLoan() {
 
   return (
     <>
-      <PSDashname />
+      {/* <PSDashname /> */}
       <div className="text-white flex justify-center items-center h-screen">
         <div className="container text-center w-3/4">
           <div className="ml-40 mb-8">

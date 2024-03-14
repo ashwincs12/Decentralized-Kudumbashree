@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import abi from "../contracts/DK.json";
 import { ethers } from 'ethers';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Notification() {
   const [notifications, setNotifications] = useState([]);
@@ -40,7 +39,7 @@ function Notification() {
                   <div className="notification-content">
                     <div className="notification-date">{notification.title}</div>
                     <div className="notification-text">{notification.desc}</div>
-                    <a href={notification.link} className="notification-read-more">Read more...</a>
+                    <a href={`http://${notification.link}`} target="_blank" rel="noopener noreferrer" className="notification-read-more">Read more...</a>
                   </div>
                 </div>
               ))}

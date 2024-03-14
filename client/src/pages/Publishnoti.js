@@ -50,7 +50,7 @@ export default function Publishnoti()
       await contract.createNotification(title,desc,link)
       
 
-    }catch(err)
+    }catch(err) 
     {
       console.log(err)
     }

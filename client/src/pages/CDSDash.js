@@ -32,7 +32,7 @@ export default function CRSDash()
         const account = await ethereum.request({
           method:"eth_requestAccounts"
         })
-
+ 
         //Reload page when account is changed
         window.ethereum.on("accountsChanged",()=>
         {
@@ -42,7 +42,7 @@ export default function CRSDash()
         //Setting current account address
         setAccount(account)
 
-             const provider = new ethers.providers.Web3Provider(ethereum) //read from blockchain
+            const provider = new ethers.providers.Web3Provider(ethereum) //read from blockchain
         const signer = provider.getSigner(); //write into blockchain
 
         //Creating instance of contract

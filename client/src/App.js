@@ -17,9 +17,6 @@ import Register from './pages/Register';
 import SHGReg from './pages/SHGReg';
 import MemberReg from './pages/MemberReg';
 
-//Web3 imports
-import abi from "./contracts/DK.json";
-import {ethers} from 'ethers'
 
 
 
