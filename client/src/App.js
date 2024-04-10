@@ -16,6 +16,7 @@ import  Landing  from './pages/Landing';
 import Register from './pages/Register';
 import SHGReg from './pages/SHGReg';
 import MemberReg from './pages/MemberReg';
+import ViewLoan from "./pages/ViewLoan";
 
 
 
@@ -73,6 +74,9 @@ export default function App() {
           </Route>
           <Route path="/mdash" >
             <MDash/>
+          </Route>
+          <Route path="/viewloan" >
+            <ViewLoan/>
           </Route>
 
           <Route path="*">

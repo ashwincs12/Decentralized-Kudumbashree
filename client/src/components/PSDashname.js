@@ -47,6 +47,9 @@ export default function PSDashname({account})
           <i class="uil-money-bill-stack"></i><Link to="/psdash/reqloan/">Request for Loan</Link>
         </li>
         <li class="">
+          <i class="uil-money-bill-stack"></i><Link to="/viewloan/">View Loans</Link>
+        </li>
+        <li class="">
           <i class="uil-angle-double-down"></i><Link to="/psdash/demote/">Demote to Member</Link>
         </li>
         <li class="">

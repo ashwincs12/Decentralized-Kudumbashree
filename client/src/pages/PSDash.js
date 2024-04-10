@@ -16,6 +16,7 @@ export default function PSDash()
   const [balance,setBalance]=useState(0);
   const [loan,setLoan]=useState(0);
   const [shgworth,setSHGWorth]=useState(0);
+  const [showPopup, setShowPopup] = useState(false);
 
   
   useEffect(()=>
@@ -41,7 +42,7 @@ export default function PSDash()
         //Setting current account address
         setAccount(account)
 
-             const provider = new ethers.providers.Web3Provider(ethereum) //read from blockchain
+        const provider = new ethers.providers.Web3Provider(ethereum) //read from blockchain
         const signer = provider.getSigner(); //write into blockchain
 
         //Creating instance of contract
@@ -58,6 +59,12 @@ export default function PSDash()
         setSHGWorth(memdash[2].toNumber());
 
         console.log(balance,loan,shgworth)
+
+        // Check if president's tenure is over
+        if (await contract.checkPresidentTenureOver()==true) {
+            setShowPopup(true); // Show popup if president's tenure is over
+        }
+        console.log(showPopup)
 
       }catch(err)
       {
@@ -133,6 +140,17 @@ export default function PSDash()
     <div className='ml-40 m-10'>
       <Notification/>
     </div>
-    </>
-  )
-}
+
+    {/* Popup */}
+    {showPopup && (
+                    <div className="popup">
+                        <div className="popup-content">
+                            <h2>President's Tenure Over</h2>
+                            <p>The President's tenure is over.</p>
+                            {/* Add more content or actions here */}
+                        </div>
+                    </div>
+                )}
+            </>
+        )
+} 

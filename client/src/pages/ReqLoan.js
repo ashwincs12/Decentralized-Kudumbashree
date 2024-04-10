@@ -1,11 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import PSDashname from '../components/PSDashname';
+import abi from "../contracts/DK.json";
+import {ethers} from 'ethers'
 
 export default function ReqLoan() {
   const [enteredAmount, setEnteredAmount] = useState('');
-  const [currentSHGWorth, setCurrentSHGWorth] = useState(0);
+  const [currentTreasuryWorth, setcurrentTreasuryWorth] = useState(0);
   const [maximumEligibleAmount, setMaximumEligibleAmount] = useState(0);
   const [amountExceedsWarning, setAmountExceedsWarning] = useState(false);
+  const [account,setAccount]=useState("Not Connected")
+
+
+  const contractAddress=abi.address
+  const contractABI=abi.abi
+
+  useEffect( ()=>
+  {
+    const template=async()=>{
+
+      try{
+        const {ethereum}= window;
+            const account = await ethereum.request({
+              method:"eth_requestAccounts"
+            })
+
+            //Reload page when account is changed
+            window.ethereum.on("accountsChanged",()=>
+            {
+              window.location.reload() 
+            })
+
+            //Setting current account address
+            setAccount(account)
+
+            const provider = new ethers.providers.Web3Provider(ethereum) //read from blockchain
+            const signer = provider.getSigner(); //write into blockchain
+
+            //Creating instance of contract
+            const contract = new ethers.Contract(contractAddress,contractABI,signer)  
+
+            // const currentTreasuryWorth=await contract.getContractBalance();
+            // setcurrentTreasuryWorth(currentTreasuryWorth);
+
+            const memdash = await contract.memdash()
+            setMaximumEligibleAmount(memdash[0].toNumber()*4)
+
+          }catch(err)
+          {
+            console.log(err)
+          }
+    }
+    template();
+  },[])
+
 
   const handleAmountChange = (e) => {
     const inputAmount = parseFloat(e.target.value);
@@ -18,17 +65,29 @@ export default function ReqLoan() {
     }
   };
 
-  const handlePayNow = () => {
-    alert('Your request has been successfully submitted and the election will start soon...');
+  const handlePayNow = async () => {
+
+    try
+    {
+      const {ethereum}= window;
+      const provider = new ethers.providers.Web3Provider(ethereum) //read from blockchain
+      const signer = provider.getSigner(); //write into blockchain
+      const contract = new ethers.Contract(contractAddress,contractABI,signer)  
+      await contract.createloan(enteredAmount)
+    }catch(err)
+    {
+      console.log(err)
+    }
+    
   };
 
   return (
     <>
-      {/* <PSDashname /> */}
+      <PSDashname account={account}/>
       <div className="text-white flex justify-center items-center h-screen">
         <div className="container text-center w-3/4">
           <div className="ml-40 mb-8">
-            <p className="mb-2">Current SHG Worth: {currentSHGWorth}</p>
+            <p className="mb-2">Current Treasury Worth: {currentTreasuryWorth}</p>
             <p className="mb-2">Maximum eligible amount: {maximumEligibleAmount}</p>
           </div>
           <div className="flex items-center">
