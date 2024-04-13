@@ -8,7 +8,7 @@ import ReviewMembers from './pages/ReviewMembers';
 import WeeklyPayment from './pages/WeeklyPayment';
 import LoanPayment from './pages/LoanPayment';
 import ReqLoan from './pages/ReqLoan';
-import Demote from './pages/Demote';
+import Nominate from './pages/Nominate';
 import MinuitsPrep from './pages/MinuitsPrep';
 import MDash from './pages/MDash';
 import Login from './pages/Login';
@@ -66,8 +66,8 @@ export default function App() {
           <Route path="/psdash/reqloan" >
             <ReqLoan/>
           </Route>
-          <Route path="/psdash/demote" >
-            <Demote/>
+          <Route path="/psdash/nominate" >
+            <Nominate/>
           </Route>
           <Route path="/psdash/minuits" >
             <MinuitsPrep/>

@@ -37,9 +37,11 @@
         //------------------------
         struct Nomination {
             address nominee;
+            string name;
             uint timestamp;
+            uint supportCount;
         }
-
+        
         mapping(uint => mapping(address => Nomination)) public shgNominations;
 
         function nominatePresident() public {
@@ -50,50 +52,126 @@
             // Check if the member has already nominated someone
             require(shgNominations[callerSHGIndex][msg.sender].timestamp == 0, "You have already nominated");
 
-            // Add the nomination
+            // Find the member's name based on their address
+            string memory memberName;
+            for (uint i = 0; i < members.length; i++) {
+                if (members[i].memaddress == msg.sender) {
+                    memberName = members[i].name;
+                    break;
+                }
+            }
+
+            // Add the nomination with the member's name
             shgNominations[callerSHGIndex][msg.sender] = Nomination({
                 nominee: msg.sender,
-                timestamp: block.timestamp
+                name: memberName,
+                timestamp: block.timestamp,
+                supportCount: 0
             });
         }
 
+
         // View Nominations
-        function viewNominations() public view returns (address[] memory) {
+        function viewNominations() public view returns (Nomination[] memory) {
             uint callerSHGIndex = memberToSHGIndex[msg.sender];
             require(callerSHGIndex < approvedSHGs.length, "Caller is not a member of any approved SHG");
 
             // Get the array of members associated with the caller's SHG index
             Member[] memory SHGMembers = SHGToMember[callerSHGIndex];
 
-            // Count the number of members who have nominated
-            uint count = 0;
+            // Initialize array to store nomination structures
+            Nomination[] memory nominations = new Nomination[](SHGMembers.length);
+            
+            // Populate the array with nomination structures
             for (uint i = 0; i < SHGMembers.length; i++) {
-                if (shgNominations[callerSHGIndex][SHGMembers[i].memaddress].timestamp != 0) {
-                    count++;
-                }
+                address nomineeAddress = SHGMembers[i].memaddress;
+                nominations[i] = shgNominations[callerSHGIndex][nomineeAddress];
             }
 
-            // Initialize array to store nominee addresses
-            address[] memory nominees = new address[](count);
-            uint index = 0;
-
-            // Add nominee addresses to the array
-            for (uint i = 0; i < SHGMembers.length; i++) {
-                if (shgNominations[callerSHGIndex][SHGMembers[i].memaddress].timestamp != 0) {
-                    nominees[index] = SHGMembers[i].memaddress;
-                    index++;
-                }
-            }
-
-            return nominees;
+            return nominations;
         }
 
         function checkPresidentTenureOver() public view returns (bool){
             uint callerSHGIndex = memberToSHGIndex[msg.sender];
             uint creationTime = approvedSHGs[callerSHGIndex].SHGRegisterTime;
-            return (block.timestamp >= creationTime + 1 minutes);
+            return (block.timestamp >= creationTime + 10 minutes);
         }
-        //------------------------
+
+        //Start change
+        mapping(uint => mapping(address => bool)) public hasVotedForNominee;
+
+        function voteNominee(address nominee) public {
+            uint callerSHGIndex = memberToSHGIndex[msg.sender];
+            require(callerSHGIndex < approvedSHGs.length, "Caller is not a member of any approved SHG");
+            
+            // Ensure the caller has not already voted
+            require(!hasVotedForNominee[callerSHGIndex][msg.sender], "Caller has already voted");
+            
+            // Ensure the nominee is part of the same SHG
+            bool isNomineeMemberOfSHG = false;
+            Member[] storage SHGMembers = SHGToMember[callerSHGIndex];
+            for(uint i = 0; i < SHGMembers.length; i++) {
+                if(SHGMembers[i].memaddress == nominee) {
+                    isNomineeMemberOfSHG = true;
+                    break;
+                }
+            }
+            require(isNomineeMemberOfSHG, "Nominee must be a member of the same SHG");
+            
+            // Increment the support count for the nominee
+            shgNominations[callerSHGIndex][nominee].supportCount++;
+            
+            // Record that the caller has voted
+            hasVotedForNominee[callerSHGIndex][msg.sender] = true;
+            
+            // If all members have voted, we find the nominee with the highest support count and make them President
+            if(allMembersHaveVoted(callerSHGIndex)) {
+                assignNewPresident(callerSHGIndex);
+            }
+        }
+
+        // Helper function to check if all members have voted
+        function allMembersHaveVoted(uint shgIndex) public view returns (bool) {
+            Member[] memory SHGMembers = SHGToMember[shgIndex];
+            for(uint i = 0; i < SHGMembers.length; i++) {
+                if(!hasVotedForNominee[shgIndex][SHGMembers[i].memaddress]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        //Event for new president
+        event NewPresidentAssigned(string name);
+
+        // Step 4: Helper function to assign the new President
+        function assignNewPresident(uint shgIndex) public {
+            Member[] storage SHGMembers = SHGToMember[shgIndex];
+            address highestVoteNominee;
+            uint highestSupportCount = 0;
+
+            // Find the nominee with the highest votes
+            for(uint i = 0; i < SHGMembers.length; i++) {
+                address memberAddress = SHGMembers[i].memaddress;
+                uint supportCount = shgNominations[shgIndex][memberAddress].supportCount;
+                if(supportCount > highestSupportCount) {
+                    highestSupportCount = supportCount;
+                    highestVoteNominee = memberAddress;
+                }
+            }
+
+            // Assign new President and change the former President to member
+            for(uint i = 0; i < SHGMembers.length; i++) {
+                if(SHGMembers[i].memaddress == highestVoteNominee) {
+                    SHGMembers[i].desig = "President";
+                } else if(keccak256(bytes(SHGMembers[i].desig)) == keccak256(bytes("President"))) {
+                    SHGMembers[i].desig = "Member";
+                }
+            }
+            emit NewPresidentAssigned(shgNominations[shgIndex][highestVoteNominee].name);
+        }
+
+        //----------------
 
         function createSHG(string memory _name,string memory _applicant,string memory _location) public {
             pendingSHGs.push(SHG(_name,_applicant,_location,msg.sender,block.timestamp));

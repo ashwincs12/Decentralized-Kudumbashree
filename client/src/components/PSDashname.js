@@ -50,7 +50,7 @@ export default function PSDashname({account})
           <i class="uil-money-bill-stack"></i><Link to="/viewloan/">View Loans</Link>
         </li>
         <li class="">
-          <i class="uil-angle-double-down"></i><Link to="/psdash/demote/">Demote to Member</Link>
+          <i class="uil-angle-double-down"></i><Link to="/psdash/nominate/">Submit Nomination</Link>
         </li>
         <li class="">
           <i class="uil-document-info"></i><Link to="/psdash/minuits/">Minutes Preparation</Link>

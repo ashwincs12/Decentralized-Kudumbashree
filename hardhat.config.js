@@ -4,10 +4,18 @@ require("@nomicfoundation/hardhat-toolbox");
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.24",
+  solidity: {
+    version: "0.8.24",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200 // Adjust the number of optimization runs as needed
+      }
+    }
+  },
   networks: {
-    mumbai: {
-      url: `https://polygon-mumbai.g.alchemy.com/v2/oYM5v24JhY_glgulVOJDghjGdqB-rY5u`, 
+    amoy: {
+      url: `https://polygon-amoy.g.alchemy.com/v2/70haACb3OPDpO29h1rDu-XyFs0wkvcZ2`, 
       accounts: ['29a658d6f8810d72015d17fe2de618847e5a2c085afe97fb5a060521daa83d8f'] 
     }
   },
