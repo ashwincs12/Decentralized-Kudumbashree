@@ -18,6 +18,7 @@ function MemberReg() {
         const approvedSHGs = await contract.getApprovedSHGs();
         setSHGs(approvedSHGs);
       } catch (error) {
+        alert(`${error.data.message}`);
         console.error('Error fetching approved SHGs:', error);
       }
     };
@@ -44,6 +45,7 @@ function MemberReg() {
 
       // Your contract function call goes here
     } catch (error) {
+      alert(`${error.data.message}`);
       console.error('Error:', error);
     }
   };

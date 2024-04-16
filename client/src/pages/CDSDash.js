@@ -62,6 +62,7 @@ export default function CRSDash()
 
       }catch(err)
       {
+        alert(`${err.data.message}`);
         console.log(err)
       }
     }

@@ -40,6 +40,7 @@ export default function PSDash() {
         //Updating state
         setState({ provider, signer, contract })
       } catch (err) {
+        alert(`${err.data.message}`);
         console.log(err)
       }
     }

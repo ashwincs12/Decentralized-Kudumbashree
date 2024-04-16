@@ -26,14 +26,17 @@ export default function PSDash() {
       try {
         // For metamask popup
         const { ethereum } = window;
+        ethereum.setMaxListeners(1);
         const account = await ethereum.request({
           method: "eth_requestAccounts"
         });
 
         // Reload page when account is changed
-        window.ethereum.on("accountsChanged", () => {
+        const handleAccountsChanged = () => {
           window.location.reload();
-        });
+        };
+
+        window.ethereum.on("accountsChanged", handleAccountsChanged);
 
         // Setting current account address
         setAccount(account);
@@ -53,6 +56,10 @@ export default function PSDash() {
         setBalance(memdash[0].toNumber());
         setLoan(memdash[1].toNumber());
         setSHGWorth(memdash[2].toNumber());
+
+        //Set Meeting Notification
+        const meeting = await contract.viewMeet();
+
 
         // Check if president's tenure is over
         setShowPopup(await contract.checkPresidentTenureOver());
@@ -82,9 +89,12 @@ export default function PSDash() {
             // Remove listener when the component is unmounted or dependencies change
             state.contract.removeAllListeners('NewPresidentAssigned');
           }
+          // Remove accountsChanged listener
+          window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
         }
         
       } catch (err) {
+        alert(`Error: ${err.message}`);
         console.log(err);
       }
     };
@@ -159,7 +169,8 @@ export default function PSDash() {
       <div className="pt-4 ml-60 pl-10 pr-10">
         <div className="welcome relative">
           <div className="content rounded-3 p-3">
-            <p className="mb-0">Next meeting scheduled at 01/02/2024 04:00 PM</p>
+            {/* <p className="mb-0">Next meeting scheduled at 01/02/2024 04:00 PM</p> */}
+            <p className="mb-0">  </p>
             <button className="absolute top-2 right-2 p-2 bg-blue-500 text-white rounded">Join Now</button>
           </div>
         </div>

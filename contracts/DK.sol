@@ -47,7 +47,7 @@
         function nominatePresident() public {
             uint callerSHGIndex = memberToSHGIndex[msg.sender];
             require(callerSHGIndex < approvedSHGs.length, "Caller is not a member of any approved SHG");
-            require(block.timestamp <= approvedSHGs[callerSHGIndex].SHGRegisterTime + 10 minutes, "Time for nominations already ended");
+            require(block.timestamp <= approvedSHGs[callerSHGIndex].SHGRegisterTime + 20 minutes, "Time for nominations already ended");
 
             // Check if the member has already nominated someone
             require(shgNominations[callerSHGIndex][msg.sender].timestamp == 0, "You have already nominated");
@@ -94,7 +94,7 @@
         function checkPresidentTenureOver() public view returns (bool){
             uint callerSHGIndex = memberToSHGIndex[msg.sender];
             uint creationTime = approvedSHGs[callerSHGIndex].SHGRegisterTime;
-            return (block.timestamp >= creationTime + 10 minutes);
+            return (block.timestamp >= creationTime + 20 minutes);
         }
 
         //Start change
@@ -216,6 +216,32 @@
             require(msg.sender == cdsadmin, "Invalid authorization, Only CDS Admin can access this dashboard!!!");
             return(approvedSHGs.length,members.length,pendingSHGs.length);
         }
+
+        //-------------------------------------
+        struct Meet
+        {
+            string agenda;
+            string link;
+            string time;
+            string date;
+            bool isSet;
+        }
+
+        mapping(uint=>Meet) public shgToMeet;
+
+        function createMeet(string memory _agenta,string memory _link,string memory _time,string memory _date, bool _isSet) public
+        {
+            uint callershgindex=memberToSHGIndex[msg.sender];
+            shgToMeet[callershgindex] = Meet(_agenta,_link,_time,_date,_isSet);
+        }
+
+        function viewMeet() public view returns (Meet memory meet) {
+            uint callershgindex=memberToSHGIndex[msg.sender];
+            Meet memory meeting = shgToMeet[callershgindex];
+            return (meeting);
+        }
+
+        //-------------------------------------
 
         function memRegandJoin(string memory _name, uint _aadhar, uint SHGindex) public {
             for (uint i = 0; i < members.length; i++) {
@@ -357,7 +383,7 @@
 
             require(!loanVote.completed, "Voting is either completed or time has expired for this loan");
 
-            if (block.timestamp > loanVote.startTime + 60 seconds) {
+            if (block.timestamp > loanVote.startTime + 20 minutes) {
                 loanVote.completed = true;
                 return; 
             }

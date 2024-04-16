@@ -35,7 +35,7 @@ export default function PSDashname({account})
           <i class="uil-estate fa-fw"></i><Link to="/psdash/">Dashboards</Link>
         </li>
         <li class="">
-          <i class="uil-question-circle"></i><Link to="/psdash/reviewmem/">Member Requests</Link>
+          <i class="uil-question-circle"></i><Link to="/createmeet/">Create Meet</Link>
         </li>
         <li class="">
           <i class="uil-money-bill"></i><Link to="/psdash/weeklypay/">Weekly Payments</Link>

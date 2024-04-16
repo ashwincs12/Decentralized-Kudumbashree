@@ -39,7 +39,7 @@ function Notification() {
                   <div className="notification-content">
                     <div className="notification-date">{notification.title}</div>
                     <div className="notification-text">{notification.desc}</div>
-                    <a href={`http://${notification.link}`} target="_blank" rel="noopener noreferrer" className="notification-read-more">Read more...</a>
+                    <a href={`https://${notification.link}`} target="_blank" rel="noopener noreferrer" className="notification-read-more">Read more...</a>
                   </div>
                 </div>
               ))}

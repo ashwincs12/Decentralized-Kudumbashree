@@ -44,6 +44,7 @@ export default function ViewLoan() {
         setMembersinSHG(await contract.getNumberOfMembersInSHG())
 
       } catch (err) {
+        alert(`${err.data.message}`);
         console.log(err);
       }
     };
@@ -58,6 +59,7 @@ export default function ViewLoan() {
         console.log("Voted for index:", index);
       }
     } catch (error) {
+      alert(`${error.data.message}`);
       console.error("Error voting:", error);
     }
   };
@@ -69,6 +71,7 @@ export default function ViewLoan() {
         console.log("Claimed loan for index:", index);
       }
     } catch (error) {
+      alert(`Error claiming loan:${error.data.message}`);
       console.error("Error claiming loan:", error);
     }
   };

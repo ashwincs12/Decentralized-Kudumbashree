@@ -39,8 +39,8 @@ export default function ReqLoan() {
             //Creating instance of contract
             const contract = new ethers.Contract(contractAddress,contractABI,signer)  
 
-            // const currentTreasuryWorth=await contract.getContractBalance();
-            // setcurrentTreasuryWorth(currentTreasuryWorth);
+            const currentTreasuryWorth=await contract.getContractBalance();
+            setcurrentTreasuryWorth(currentTreasuryWorth.toNumber());
 
             const memdash = await contract.memdash()
             setMaximumEligibleAmount(memdash[0].toNumber()*4)
@@ -66,6 +66,18 @@ export default function ReqLoan() {
   };
 
   const handlePayNow = async () => {
+    
+    if (amountExceedsWarning)
+    {
+      alert("Requested amount should be lesser than the eligible amount...")
+      return;
+    }
+
+    if (currentTreasuryWorth<enteredAmount)
+    {
+      alert("The amount requested is not available in Treasury...")
+      return;
+    }
 
     try
     {

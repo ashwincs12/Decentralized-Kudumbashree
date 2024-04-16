@@ -1,41 +1,44 @@
 import React, { useEffect, useState } from 'react';
 import PSDashname from '../components/PSDashname';
 import abi from "../contracts/DK.json";
-import {ethers} from 'ethers'
+import { ethers } from 'ethers';
 
 export default function WeeklyPayment() {
-  const [initialBalance,setInitialBalance] = useState(0);
+  const [initialBalance, setInitialBalance] = useState(0);
   const [amt, setAmt] = useState('');
   const [balance, setBalance] = useState(initialBalance);
-  const [account,setAccount]=useState("Not connected")
-  const [contract,setContract]=useState(null)
+  const [account, setAccount] = useState("Not connected");
+  const [contract, setContract] = useState(null);
 
-  useEffect(()=>
-  {
-    const template=async()=>{
-      const {ethereum}= window;
-          const account = await ethereum.request({
-            method:"eth_requestAccounts"
-          })
-          window.ethereum.on("accountsChanged",()=>
-          {
-            window.location.reload() 
-          })
-          setAccount(account)
+  const template = async () => {
+    try {
+      const { ethereum } = window;
+      const account = await ethereum.request({
+        method: "eth_requestAccounts"
+      });
+      window.ethereum.on("accountsChanged", () => {
+        window.location.reload()
+      });
+      setAccount(account);
 
-          const contractAddress=abi.address
-          const contractABI=abi.abi
-          const provider = new ethers.providers.Web3Provider(ethereum) //read from blockchain
-          const signer = provider.getSigner(); //write into blockchain
-          const contract = new ethers.Contract(contractAddress,contractABI,signer)    
-          setContract(contract)
+      const contractAddress = abi.address;
+      const contractABI = abi.abi;
+      const provider = new ethers.providers.Web3Provider(ethereum); // read from blockchain
+      const signer = provider.getSigner(); // write into blockchain
+      const contract = new ethers.Contract(contractAddress, contractABI, signer);
+      setContract(contract);
 
-          const memdash=await contract.memdash()
-          setInitialBalance(memdash[1].toNumber())
-          console.log(initialBalance)
+      const memdash = await contract.memdash();
+      setInitialBalance(memdash[1].toNumber());
+      console.log(initialBalance);
+    } catch (err) {
+      alert(`${err.data.message}`);
     }
+  };
+
+  useEffect(() => {
     template();
-  },[])
+  }, []);
 
   const handleAmountChange = (e) => {
     const inputAmt = e.target.value;
@@ -53,13 +56,14 @@ export default function WeeklyPayment() {
       await transaction.wait(); // Wait for the transaction to be mined
       console.log("Payment successful!");
     } catch (err) {
+      alert(`${err.data.message}`);
       console.error("Payment failed:", err);
     }
   };
-  
+
   return (
     <>
-      <PSDashname account={account}/>
+      <PSDashname account={account} />
       <div className="text-white flex justify-center items-center h-screen">
         <div className="container text-center w-3/4">
           <div className="flex items-center mb-8 ">

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Dashname from "../components/Dashname";
+import PSDashname from "../components/PSDashname";
 import "../stylesheets/dashboardstyle.css";
 import abi from "../contracts/DK.json";
 import { ethers } from 'ethers';
 
-export default function Publishnoti() {
+export default function CreateMeet() {
   const [account, setAccount] = useState("Not Connected");
 
   useEffect(() => {
@@ -44,28 +44,35 @@ export default function Publishnoti() {
       const signer = provider.getSigner(); // write into blockchain
       const contract = new ethers.Contract(contractAddress, contractABI, signer);
 
-      const title = document.querySelector("#title").value;
-      const desc = document.querySelector("#desc").value;
+      const agenta = document.querySelector("#agenta").value;
       const link = document.querySelector("#link").value;
+      const time = document.querySelector("#time").value;
+      const date = document.querySelector("#date").value;
 
-      await contract.createNotification(title, desc, link);
+      await contract.createMeet(agenta,link,time,date,true);
+      const result = await contract.viewMeet()
+      console.log(result)
     } catch (err) {
+      alert(`${err.data.message}`);
       console.log(err);
     }
   };
 
   return (
     <>
-      <Dashname account={account} />
+      <PSDashname account={account} />
       <div className="ml-40 m-10">
         <section className="charts ml-40">
           <div className="chart-container p-3 charts m-">
-            <h3 className="fs-3">PUBLISH NOTIFICATIONS</h3>
+            <h3 className="fs-3">Schedule Meeting</h3>
             <div className="flex flex-col space-y-4 p-10" style={{ height: '300px' }}>
-              <input type="text" id="title" required className="form-control" placeholder="Notification Title" />
-              <textarea className="form-control" id="desc" required rows="3" placeholder="Notification Description"></textarea>
-              <input type="text" className="form-control" id="link" placeholder="Link" />
-              <button type="submit" className="btn btn-success mx-auto" onClick={handleSubmit}>Submit</button>
+              <input type="text" id="agenta" required className="form-control" placeholder="Meeting Agenta" />
+              <input type="text" className="form-control" id="link" placeholder="Meeting Link" />
+              <div className="flex">
+                <input type="date" className="form-control mr-3" id="date" placeholder="Meeting Date" />
+                <input type="time" className="form-control ml-3" id="time" placeholder="Meeting Time" />
+              </div>
+              <button type="submit" className="btn btn-success mx-auto mt-5" onClick={handleSubmit}>Submit</button>
             </div>
           </div>
         </section>
