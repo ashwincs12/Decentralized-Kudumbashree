@@ -2,5 +2,11 @@
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
     "hardhat": "^2.20.1"
+  },
+  "dependencies": {
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.1",
+    "react-chatbot-kit": "^2.2.2",
+    "react-simple-chatbot": "^0.6.1"
   }
 }

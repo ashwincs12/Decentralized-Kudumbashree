@@ -58,16 +58,16 @@ export default function App() {
           <Route path="/psdash/reviewmem" >
             <ReviewMembers />
           </Route>
-          <Route path="/psdash/weeklypay" >
+          <Route path="/weeklypay" >
             <WeeklyPayment />
           </Route>
-          <Route path="/psdash/loanpay" >
+          <Route path="/loanpay" >
             <LoanPayment/>
           </Route>
-          <Route path="/psdash/reqloan" >
+          <Route path="/reqloan" >
             <ReqLoan/>
           </Route>
-          <Route path="/psdash/nominate" >
+          <Route path="/nominate" >
             <Nominate/>
           </Route>
           <Route path="/psdash/minuits" >

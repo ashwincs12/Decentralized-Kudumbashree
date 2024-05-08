@@ -33,13 +33,13 @@ export default function MDashname()
           <i class="uil-estate fa-fw"></i><Link to="/psdash/">Dashboards</Link>
         </li>
         <li class="">
-          <i class="uil-money-bill"></i><Link to="/psdash/weeklypay/">Weekly Payments</Link>
+          <i class="uil-money-bill"></i><Link to="/weeklypay/">Weekly Payments</Link>
         </li>
         <li class="">
-          <i class="uil-money-bill"></i><Link to="/psdash/loanpay/">Loan Repayments</Link>
+          <i class="uil-money-bill"></i><Link to="/loanpay/">Loan Repayments</Link>
         </li>
         <li class="">
-          <i class="uil-money-bill-stack"></i><Link to="/psdash/reqloan/">Request for Loan</Link>
+          <i class="uil-money-bill-stack"></i><Link to="/reqloan/">Request for Loan</Link>
         </li>
       </ul>
     </aside>

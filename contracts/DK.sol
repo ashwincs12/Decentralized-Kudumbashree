@@ -94,7 +94,7 @@
         function checkPresidentTenureOver() public view returns (bool){
             uint callerSHGIndex = memberToSHGIndex[msg.sender];
             uint creationTime = approvedSHGs[callerSHGIndex].SHGRegisterTime;
-            return (block.timestamp >= creationTime + 20 minutes);
+            return (block.timestamp >= creationTime + 5 minutes);
         }
 
         //Start change
@@ -409,7 +409,6 @@
             Loanvote storage loanVote = shgIndexToLoan[callerSHGIndex][_index];
 
             require(msg.sender == loanVote.applicant_add, "Only the applicant can claim the vote.");
-            require(loanVote.completed, "Vote is not completed yet.");
             require(!loanVote.claimed, "Loan has already been claimed."); // Check if loan has already been claimed
 
             uint totalMembers = SHGToMember[callerSHGIndex].length;
