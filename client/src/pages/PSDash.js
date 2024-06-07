@@ -17,6 +17,10 @@ export default function PSDash() {
   const [shgworth, setSHGWorth] = useState(0);
   const [showPopup, setShowPopup] = useState(false);
   const [nominees, setNominees] = useState([]);
+  const [meetagenta,setMeetAgenta]=useState();
+  const [meetdate,setMeetDate]=useState();
+  const [meettime,setMeettime]=useState();
+  const [meetlink,setMeetlink]=useState();
 
   useEffect(() => {
     const template = async () => {
@@ -59,6 +63,10 @@ export default function PSDash() {
 
         //Set Meeting Notification
         const meeting = await contract.viewMeet();
+        setMeetAgenta(meeting.agenda)
+        setMeetDate(meeting.date)
+        setMeettime(meeting.time)
+        setMeetlink(meeting.link)
 
 
         // Check if president's tenure is over
@@ -169,9 +177,9 @@ export default function PSDash() {
       <div className="pt-4 ml-60 pl-10 pr-10">
         <div className="welcome relative">
           <div className="content rounded-3 p-3">
-            {/* <p className="mb-0">Next meeting scheduled at 01/02/2024 04:00 PM</p> */}
+            <p className="mb-0">Meeting on Topic {meetagenta}at {meetdate} {meettime}</p>
             <p className="mb-0">  </p>
-            <button className="absolute top-2 right-2 p-2 bg-blue-500 text-white rounded">Join Now</button>
+            <button className="absolute top-2 right-2 p-2 bg-blue-500 text-white rounded"><a href={meetlink}>Join Now</a></button>
           </div>
         </div>
       </div>

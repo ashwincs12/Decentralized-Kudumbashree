@@ -47,7 +47,7 @@
         function nominatePresident() public {
             uint callerSHGIndex = memberToSHGIndex[msg.sender];
             require(callerSHGIndex < approvedSHGs.length, "Caller is not a member of any approved SHG");
-            require(block.timestamp <= approvedSHGs[callerSHGIndex].SHGRegisterTime + 20 minutes, "Time for nominations already ended");
+            require(block.timestamp <= approvedSHGs[callerSHGIndex].SHGRegisterTime + 1 days, "Time for nominations already ended");
 
             // Check if the member has already nominated someone
             require(shgNominations[callerSHGIndex][msg.sender].timestamp == 0, "You have already nominated");
@@ -94,7 +94,7 @@
         function checkPresidentTenureOver() public view returns (bool){
             uint callerSHGIndex = memberToSHGIndex[msg.sender];
             uint creationTime = approvedSHGs[callerSHGIndex].SHGRegisterTime;
-            return (block.timestamp >= creationTime + 5 minutes);
+            return (block.timestamp >= creationTime + 1 days);
         }
 
         //Start change
@@ -262,6 +262,9 @@
             SHGToMember[SHGindex].push(newMember);
         }
 
+        function getMembers() public view returns (Member[] memory) {
+            return members;
+        }
 
         function memdash() public view returns (uint, uint, uint) {
             uint callerBalance = 0;
@@ -383,7 +386,7 @@
 
             require(!loanVote.completed, "Voting is either completed or time has expired for this loan");
 
-            if (block.timestamp > loanVote.startTime + 20 minutes) {
+            if (block.timestamp > loanVote.startTime + 1 days) {
                 loanVote.completed = true;
                 return; 
             }

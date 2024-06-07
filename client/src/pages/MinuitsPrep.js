@@ -9,7 +9,7 @@ const Review = ({ steps }) => {
   useEffect(() => {
     const generatePdf = () => {
       const doc = new jsPDF();
-      doc.text(`The ${meetingNo.value}th meeting was conducted on ${meetingDate.value} and the agenda was ${meetingAgenda.value}. ${specialNotes.value}. Next meeting scheduled on ${nextMeeting.value}.`, 10, 10);
+      doc.text(` MEETING MINUITES  \nThe ${meetingNo.value}th meeting was conducted on ${meetingDate.value} \n The the agenda was ${meetingAgenda.value}.\n ${specialNotes.value}. \nNext meeting scheduled on ${nextMeeting.value}.`, 10, 10);
       doc.save(`MeetingSummary_${meetingNo.value}.pdf`);
     };
 

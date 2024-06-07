@@ -2,8 +2,10 @@ import React from 'react'
 import '../stylesheets/dashboardstyle.css';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
-export default function MDashname()
+export default function MDashname({account})
 {
+  let add1=account[0].slice(0,7)
+  let add2=account[0].slice(-7)
   return(
     <>
          <aside className="sidebar position-fixed top-0 left-0 overflow-auto h-100 float-left" id="show-side-navigation1">
@@ -17,10 +19,10 @@ export default function MDashname()
           />
           <div className="ms-2">
             <h5 className="fs-6 mb-0">
-              <a className="text-decoration-none" href="#">NAME</a>
+              <a className="text-decoration-none" href="#">Member</a>
             </h5>
-            <p className="mt-1 mb-0">Member</p>
-          </div>
+            {/* <p className="mt-1 mb-0">President</p> */}
+          </div> 
         </div>
 
         <div className="search position-relative text-center px-4 py-3 mt-2">
@@ -32,6 +34,7 @@ export default function MDashname()
         <li class="">
           <i class="uil-estate fa-fw"></i><Link to="/psdash/">Dashboards</Link>
         </li>
+        
         <li class="">
           <i class="uil-money-bill"></i><Link to="/weeklypay/">Weekly Payments</Link>
         </li>
@@ -41,6 +44,13 @@ export default function MDashname()
         <li class="">
           <i class="uil-money-bill-stack"></i><Link to="/reqloan/">Request for Loan</Link>
         </li>
+        <li class="">
+          <i class="uil-money-bill-stack"></i><Link to="/viewloan/">View Loans</Link>
+        </li>
+        <li class="">
+          <i class="uil-angle-double-down"></i><Link to="/nominate/">Submit Nomination</Link>
+        </li>
+        
       </ul>
     </aside>
 
@@ -53,34 +63,8 @@ export default function MDashname()
               </button>
               <a className="navbar-brand" href="#">D - <span className="main-color">Kudumbashree</span></a>
             </div>
-            <div className="collapse navbar-collapse" id="toggle-navbar">
-              <ul className="navbar-nav ms-auto">
-                <li className="nav-item dropdown">
-                  <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Settings
-                  </a>
-                  <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li>
-                      <a className="dropdown-item" href="#">My account</a>
-                    </li>
-                    <li><a className="dropdown-item" href="#">My inbox</a></li>
-                    <li><a className="dropdown-item" href="#">Help</a></li>
-                    <li><hr className="dropdown-divider" /></li>
-                    <li><a className="dropdown-item" href="#">Log out</a></li>
-                  </ul>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#"><i className="uil-comments-alt"></i><span>23</span></a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#"><i className="uil-bell"></i><span>98</span></a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="#">
-                    <i data-show="show-side-navigation1" className="uil-bars show-side-btn"></i>
-                  </a>
-                </li>
-              </ul>
+            <div>
+            <button class="connect metamask-btn bg-blue-700 text-white px-8 py-4 text-2xl rounded-md">🦊 {add1}...{add2}</button>
             </div>
           </div>
         </nav>

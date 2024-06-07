@@ -20,9 +20,9 @@ export default function Dashname({account})
           />
           <div className="ms-2">
             <h5 className="fs-6 mb-0">
-              <a className="text-decoration-none" href="#">NAME</a>
+              <a className="text-decoration-none" href="#">CDS Admin</a>
             </h5>
-            <p className="mt-1 mb-0">CDS Admin</p>
+            {/* <p className="mt-1 mb-0">CDS Admin</p> */}
           </div>
         </div> 
 
@@ -37,6 +37,9 @@ export default function Dashname({account})
           </li>
           <li className="">
             <i className="uil-question-circle"></i> <Link to="/cdsdash/reviewshg">Review SHG Requests</Link>
+          </li>
+          <li className="">
+            <i className="uil-eye"></i> <Link to="/viewmembers">View Members</Link>
           </li>
           <li className="">
             <i className="uil-bell"></i><Link to="/cdsdash/publishnoti">Publish Notifications</Link>

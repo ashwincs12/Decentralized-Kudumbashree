@@ -18,6 +18,7 @@ import SHGReg from './pages/SHGReg';
 import MemberReg from './pages/MemberReg';
 import ViewLoan from "./pages/ViewLoan";
 import CreateMeet from "./pages/CreateMeet.js"
+import ViewMembers from './pages/ViewMembers.js';
 
 
 
@@ -81,6 +82,9 @@ export default function App() {
           </Route>
           <Route path="/createmeet" >
             <CreateMeet/>
+          </Route>
+          <Route path="/viewmembers" >
+            <ViewMembers/>
           </Route>
 
           <Route path="*">
