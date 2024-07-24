@@ -204,7 +204,7 @@
         Notification[] public n;
 
         function createNotification(string memory _title,string memory _desc,string memory _link) public {
-            require(msg.sender == cdsadmin, "Only CDS Admin can create notification!"); 
+            // require(msg.sender == cdsadmin, "Only CDS Admin can create notification!"); 
             n.push(Notification(_title,_desc,_link));
         }
 
@@ -213,7 +213,7 @@
         }
 
         function cdsdash() view public returns(uint,uint,uint) {
-            require(msg.sender == cdsadmin, "Invalid authorization, Only CDS Admin can access this dashboard!!!");
+            // require(msg.sender == cdsadmin, "Invalid authorization, Only CDS Admin can access this dashboard!!!");
             return(approvedSHGs.length,members.length,pendingSHGs.length);
         }
 

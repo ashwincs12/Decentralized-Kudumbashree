@@ -102,12 +102,12 @@ export default function PSDash() {
         }
         
       } catch (err) {
-        alert(`Error: ${err.message}`);
+        alert(`Error: ${err.data.message}`);
         console.log(err);
       }
     };
     template();
-  }, [balance, loan, shgworth,state.contract, state.signer]);
+  }, []);
 
 
   // Function to handle support button click

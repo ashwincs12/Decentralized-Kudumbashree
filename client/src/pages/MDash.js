@@ -67,7 +67,7 @@ export default function MDash() {
         setMeetlink(meeting.link)      
         
       } catch (err) {
-        alert(`Error: ${err.message}`);
+        alert(`Error: ${err.data.message}`);
         console.log(err);
       }
     };

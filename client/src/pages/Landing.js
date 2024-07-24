@@ -5,6 +5,7 @@ import "../stylesheets/Landing.css";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 
 export default function Landing(){
+  alert("To avoid unexpected errors, please make sure that you have metamask extension enabled and the network is set to Ethereum HOLESKY. Thank You!")
   return (
     <div className="macbook-pro bg-white-500  ">
       <div className="div">

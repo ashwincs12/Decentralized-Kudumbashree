@@ -62,7 +62,7 @@ export default function CRSDash()
 
       }catch(err)
       {
-        alert(`${err.data.message}`);
+        alert(`Metamask connection failed. Please install metamask and switch to amoy network!`);
         console.log(err)
       }
     }

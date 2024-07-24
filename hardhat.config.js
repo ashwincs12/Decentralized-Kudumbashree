@@ -1,8 +1,14 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config()
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
+
+const HOLESKY_URL = process.env.HOLESKY_URL;
+const AMOY_URL = process.env.AMOY_URL;
+const PRIVATE_URL = process.env.PRIVATE_KEY;
+
 module.exports = {
   solidity: {
     version: "0.8.24",
@@ -15,8 +21,12 @@ module.exports = {
   },
   networks: {
     amoy: {
-      url: `https://polygon-amoy.g.alchemy.com/v2/70haACb3OPDpO29h1rDu-XyFs0wkvcZ2`, 
-      accounts: ['29a658d6f8810d72015d17fe2de618847e5a2c085afe97fb5a060521daa83d8f'] 
+      url: AMOY_URL, 
+      accounts: [PRIVATE_URL] 
+    },
+    holesky: {
+      url: HOLESKY_URL, 
+      accounts: [PRIVATE_URL] 
     }
   },
 };
